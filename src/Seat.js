@@ -1,13 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 
-export function Seat({number, status}) {
+export function Seat( props ) {
+    const [status, setStatus] = useState( Math.random() < 0.5 ? 'free' : 'occupied' );
+
     return (
         <svg
             className="train-seat"
             width="100"
             height="100"
             viewBox="0 0 100 100"
+            onClick={() => {
+                if(status === 'free'){
+                    setStatus('selected');
+                }else if(status === 'selected'){
+                    setStatus('free');
+                }
+            }}
         >
             <g className={`train-seat__seat train-seat__seat--${status}`}>
                 <rect x="10" y="15" width="80" height="70" rx="15" ry="15"/>
@@ -17,7 +26,7 @@ export function Seat({number, status}) {
             </g>
 
             <text className="train-seat__number" x="25" y="60">
-                {number}
+                {props.number}
             </text>
         </svg>
     )
